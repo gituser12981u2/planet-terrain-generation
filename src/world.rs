@@ -9,8 +9,8 @@ use bevy::{
     },
     math::{Vec3, primitives::Cuboid},
     pbr::{
-        AmbientLight, CascadeShadowConfig, CascadeShadowConfigBuilder, DirectionalLight,
-        MeshMaterial3d, StandardMaterial,
+        AmbientLight, CascadeShadowConfig, CascadeShadowConfigBuilder, MeshMaterial3d,
+        StandardMaterial,
     },
     render::mesh::{Mesh, Mesh3d},
     time::Time,
@@ -28,21 +28,6 @@ pub fn setup_world(
     mut meshes: ResMut<Assets<Mesh>>,
     mut materials: ResMut<Assets<StandardMaterial>>,
 ) {
-    // Visual ground
-    // commands.spawn((
-    //     Mesh3d(meshes.add(Cuboid::new(20.0, 0.2, 20.0))),
-    //     MeshMaterial3d(materials.add(StandardMaterial {
-    //         base_color: Color::srgb(0.20, 0.25, 0.28),
-    //         ..default()
-    //     })),
-    //     Transform::from_xyz(0.0, -0.1, 0.0),
-    // ));
-    // // Physics ground
-    // commands.spawn((
-    //     Collider::cuboid(20.0, 0.1, 20.0),
-    //     Transform::from_xyz(0.0, -0.1, 0.0),
-    // ));
-
     // cube
     commands.spawn((
         Mesh3d(meshes.add(Mesh::from(Cuboid::new(1.0, 1.0, 1.0)))),

@@ -1,6 +1,7 @@
 use bevy::{
     DefaultPlugins,
     app::{App, Startup, Update},
+    pbr::MaterialPlugin,
     utils::default,
 };
 use bevy_rapier3d::{
@@ -13,6 +14,9 @@ use crate::terrain::TerrainPlugin;
 mod flycam;
 mod terrain;
 mod world;
+mod world_normal_material;
+
+use world_normal_material::WorldNormalMaterial;
 
 fn main() {
     App::new()
@@ -22,6 +26,7 @@ fn main() {
             enabled: true,
             ..default()
         })
+        .add_plugins(MaterialPlugin::<WorldNormalMaterial>::default())
         .add_plugins(TerrainPlugin)
         .add_systems(Startup, world::setup_world)
         .add_systems(
