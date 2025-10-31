@@ -9,14 +9,13 @@ use bevy_rapier3d::{
     render::RapierDebugRenderPlugin,
 };
 
-use crate::terrain::TerrainPlugin;
+use crate::{
+    root::{flycam, world},
+    terrain_generation::{terrain::TerrainPlugin, world_normal_material::WorldNormalMaterial},
+};
 
-mod flycam;
-mod terrain;
-mod world;
-mod world_normal_material;
-
-use world_normal_material::WorldNormalMaterial;
+mod root;
+mod terrain_generation;
 
 fn main() {
     App::new()

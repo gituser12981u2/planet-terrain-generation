@@ -17,7 +17,7 @@ use rayon::{
     slice::ParallelSliceMut,
 };
 
-use crate::world_normal_material::WorldNormalMaterial;
+use crate::terrain_generation::world_normal_material::WorldNormalMaterial;
 
 #[derive(Component)]
 struct PlanetFace;
@@ -218,13 +218,13 @@ fn export_normal_map(
         f.set_frequency(Some(1.0));
 
         let v = 2.0 * (y as f32 / (h - 1) as f32) - 1.0;
-        for x in 0..w {
+        row.iter_mut().enumerate().for_each(|(x, cell)| {
             let u = 2.0 * (x as f32 / (w - 1) as f32) - 1.0;
             let dir = cube_to_sphere_dir(face, u, v);
             let world_on_surface = dir * radius;
             let hgt = fbm(&f, world_on_surface, np) * np.amplitude;
-            row[x] = dir * (radius + hgt);
-        }
+            *cell = dir * (radius + hgt);
+        });
     });
 
     // Normals
@@ -254,7 +254,7 @@ fn export_normal_map(
                 }
 
                 let i = x * 3;
-                row_bytes[i + 0] = ((n.x * 0.5 + 0.5) * 255.0).clamp(0.0, 255.0) as u8;
+                row_bytes[i] = ((n.x * 0.5 + 0.5) * 255.0).clamp(0.0, 255.0) as u8;
                 row_bytes[i + 1] = ((n.y * 0.5 + 0.5) * 255.0).clamp(0.0, 255.0) as u8;
                 row_bytes[i + 2] = ((n.z * 0.5 + 0.5) * 255.0).clamp(0.0, 255.0) as u8;
             }
