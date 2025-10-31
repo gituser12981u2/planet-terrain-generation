@@ -5,5 +5,9 @@ edition = "2024"
 
 [dependencies]
 bevy = "0.16.1"
+bevy_asset = "0.16.1-rc.2"
+bevy_render = "0.16.1-rc.2"
 bevy_rapier3d = "0.31.0"
 fastnoise-lite = "1.1.1"
+image = "0.25.8"
+rayon = "1.11.0"
