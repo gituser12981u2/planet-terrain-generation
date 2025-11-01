@@ -18,7 +18,7 @@ use bevy::{
     utils::default,
 };
 
-use crate::flycam::FlyCam;
+use crate::root::flycam::FlyCam;
 
 #[derive(Component)]
 pub struct Spinner;

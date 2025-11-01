@@ -1,0 +1,36 @@
+name: Rust CI/CD
+
+on:
+    push:
+        branches: [main]
+    pull_request:
+        branches: [main]
+
+jobs:
+    check:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
+            - name: Setup Rust
+              uses: actions-rs/toolchain@v1
+              with:
+                  toolchain: stable
+                  override: true
+            - name: Install system dependencies
+              run: |
+                  sudo apt-get update
+                  sudo apt-get install -y libasound2-dev pkg-config
+                  sudo apt-get install -y libudev-dev
+            - name: Lint (clippy)
+              run: cargo clippy --all-targets -- -D warnings
+            - name: Format check
+              run: cargo fmt --all -- --check
+            - name: Run tests
+              run: cargo test --all
+            - name: Conventional commits check
+              if: github.event_name == 'pull_request'
+              uses: cocogitto/cocogitto-action@v3
+              with:
+                  check-latest-tag-only: false
