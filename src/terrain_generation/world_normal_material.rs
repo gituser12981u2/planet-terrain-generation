@@ -3,9 +3,9 @@ use bevy::prelude::*;
 use bevy::render::mesh::MeshVertexBufferLayoutRef;
 use bevy::render::render_resource::*;
 
+#[allow(dead_code)]
 #[derive(ShaderType, Clone, Copy, Default, Debug)]
 pub struct WorldNormalParams {
-    #[allow(dead_code)]
     pub _pad: Vec4, // makes binding(0) a valid 16-byte uniform
 }
 
