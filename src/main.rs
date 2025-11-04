@@ -11,7 +11,11 @@ use bevy_rapier3d::{
 
 use crate::{
     root::{flycam, world},
-    terrain_generation::{terrain::TerrainPlugin, world_normal_material::WorldNormalMaterial},
+    terrain_generation::{
+        lod::{TerrainLodPlugin, systems::PlanetRadius},
+        terrain_core::NoiseParams,
+        world_normal_material::WorldNormalMaterial,
+    },
 };
 
 mod root;
@@ -26,7 +30,9 @@ fn main() {
             ..default()
         })
         .add_plugins(MaterialPlugin::<WorldNormalMaterial>::default())
-        .add_plugins(TerrainPlugin)
+        .insert_resource(NoiseParams::default())
+        .insert_resource(PlanetRadius(50.0))
+        .add_plugins(TerrainLodPlugin)
         .add_systems(Startup, world::setup_world)
         .add_systems(
             Update,
